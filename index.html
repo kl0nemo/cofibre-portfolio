@@ -270,6 +270,16 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 #ld .bar{position:absolute;left:32px;right:32px;bottom:calc(30px + env(safe-area-inset-bottom,0px));height:2px;background:rgba(11,12,15,.12)}
 #ld .bar b{display:block;height:100%;width:0;background:#0B0C0F}
 #ld .pc{position:absolute;right:32px;bottom:calc(42px + env(safe-area-inset-bottom,0px));font:600 14px var(--b)}
+
+/* fix: desktop card layout */
+.card .info{justify-content:flex-start}
+.card .info>div:first-child{container-type:inline-size}
+.card h3{font-size:clamp(30px,11cqi,72px);overflow-wrap:normal;word-break:normal;hyphens:none}
+.feats{margin-top:32px}
+.card .open{margin-top:auto;padding-top:24px}
+.vis{container-type:size}
+.vp{height:min(100%,calc(100cqw * 2.0125))}
+@media (max-width:860px){.card h3{font-size:clamp(28px,11cqi,44px)}}
 </style>
 </head>
 <body>
@@ -449,7 +459,7 @@ document.querySelectorAll('.nl a').forEach(a=>{const sp=a.querySelectorAll('span
 document.querySelectorAll('.card').forEach(card=>{const vp=card.querySelector('.vp'),imgs=[...vp.querySelectorAll('img')],li=[...card.querySelectorAll('.feats li')];let cur=0,timer,vis=false;
   function place(){const f=li[cur],[x0,y0,x1,y1]=f.dataset.r.split(',').map(Number),img=imgs.find(m=>m.dataset.id===f.dataset.id);
     const W=+img.getAttribute('width'),H=+img.getAttribute('height'),bw=vp.clientWidth,bh=vp.clientHeight,rw=(x1-x0)*W,rh=(y1-y0)*H;
-    const sc=Math.min(bw*.94/rw,bh*.92/rh,2.4);const cl=(v,lo)=>lo<0?Math.min(0,Math.max(lo,v)):lo/2;let tx=cl(bw/2-(x0*W+rw/2)*sc,bw-W*sc),ty=cl(bh/2-(y0*H+rh/2)*sc,bh-H*sc);
+    const sc=Math.max(Math.min(bw*.94/rw,bh*.92/rh,2.4),bw/W,bh/H);const cl=(v,lo)=>lo<0?Math.min(0,Math.max(lo,v)):lo/2;let tx=cl(bw/2-(x0*W+rw/2)*sc,bw-W*sc),ty=cl(bh/2-(y0*H+rh/2)*sc,bh-H*sc);
     imgs.forEach(m=>{m.classList.toggle('a',m===img);if(m===img)m.style.transform=`translate(${tx}px,${ty}px) scale(${sc})`})}
   function go(n){cur=(n+li.length)%li.length;li.forEach((x,k)=>{x.classList.toggle('a',k===cur);const e=x.querySelector('em');e.style.animation='none';void e.offsetWidth;e.style.animation=''});place();run()}
   function run(){clearTimeout(timer);if(vis&&!RM)timer=setTimeout(()=>go(cur+1),2800)}
