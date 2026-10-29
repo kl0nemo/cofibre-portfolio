@@ -428,6 +428,10 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   .pn{top:calc(72px + var(--i)*12px);height:clamp(500px,calc(100svh - 118px),740px);margin-bottom:9vh}
 }
 @media (prefers-reduced-motion:reduce){.wem img{animation:none}}
+
+/* fix: projects one after another, each scrolls on its own */
+.duo{grid-template-columns:minmax(0,1fr);gap:16vh;max-width:1000px;margin-left:auto;margin-right:auto}
+@media (min-width:861px){.pn{height:clamp(480px,calc(100svh - 200px),640px)}}
 </style>
 </head>
 <body>
