@@ -431,7 +431,10 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 
 /* fix: projects one after another, each scrolls on its own */
 .duo{grid-template-columns:minmax(0,1fr);gap:16vh;max-width:1000px;margin-left:auto;margin-right:auto}
-@media (min-width:861px){.pn{height:clamp(480px,calc(100svh - 200px),640px)}}
+@media (min-width:861px){.pn{height:clamp(560px,calc(100svh - 150px),760px)}
+.pg2 h4{font-size:clamp(24px,4.4cqw,40px)}
+.feat b{font-size:clamp(24px,4.6cqw,44px)}
+.pg2{gap:18px;padding:24px 26px}}
 </style>
 </head>
 <body>
@@ -638,6 +641,17 @@ function upd(){if(RM)return;pns.forEach(p=>{const n=p.nextElementSibling;if(!n||
   const pr=p.getBoundingClientRect(),nr=n.getBoundingClientRect();const k=Math.min(Math.max((pr.bottom-nr.top)/pr.height,0),1);
   p.style.transform='scale('+(1-k*.045)+')';p.style.filter='brightness('+(1-k*.5)+')'})}
 addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd()})();
+</script>
+<script>
+/* fit each pane's content into its frame */
+(()=>{const pns=[...document.querySelectorAll('.pn')];
+function fit(){pns.forEach(p=>{const bd=p.querySelector('.bd'),cr=p.querySelector('.cr');if(!bd)return;
+  bd.style.zoom='';bd.style.flex='none';bd.style.height='auto';
+  const avail=p.clientHeight-(cr?cr.offsetHeight:0),H=bd.scrollHeight;
+  if(H<=avail+1){bd.style.flex='';bd.style.height='';return}
+  const k=Math.max(avail/H,.82);bd.style.zoom=k;bd.style.height=(avail/k)+'px'})}
+addEventListener('resize',fit);addEventListener('load',fit);
+if(document.fonts)document.fonts.ready.then(fit);fit()})();
 </script>
 </body>
 </html>
